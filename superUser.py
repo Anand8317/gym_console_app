@@ -182,7 +182,7 @@ class superUser(Gym):
         opt = int(input("Enter: "))
         
         if opt == 1:
-            bmi = int(input("Enter bmi or contact number (10 digits): "))
+            bmi = int(input("Enter bmi: "))
 
             for key in regimen_1:
                 if (bmi < key and bmi < 30):
@@ -196,7 +196,7 @@ class superUser(Gym):
             print("\n")
             print("The regimen for bmi {} is:".format(bmi))
             for i in range(7):
-                print("{} : {}".format(days[i], self.regimen[bmi_1][i]))
+                print("{} : {}".format(days[i], Gym.regimen[bmi_1][i]))
             print("\n")
             
         if opt == 2:
