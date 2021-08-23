@@ -221,19 +221,20 @@ class superUser(Gym):
         print("\n")
         
         print("Available list of members who have custom regimen)")
-        print(Gym.custom_regimen)
+        print(list(Gym.custom_regimen.keys()))
         
         con_no = input("Enter contact: ")
         
         if con_no not in Gym.custom_regimen:
-            print("Regimen doesn't exist")
+            print("\n")
+            print("Member doesn't exist or doesn't have custom regimen, please create it")
             print("\n")
             return
         
         del Gym.custom_regimen[con_no]
         
         print("\n")
-        print("Member doesn't exist or doesn't have custom regimen, please create it")
+        print("Custom regimen has been deleted")
         print("\n")
     
     def upd_regimen(self):
@@ -241,8 +242,7 @@ class superUser(Gym):
         print("\n")
         
         print("Available list of members who have custom regimen)")
-        print(Gym.custom_regimen.keys(
-        ))
+        print(list(Gym.custom_regimen.keys()))
         
         con_no = input("Enter contact: ")       
         
