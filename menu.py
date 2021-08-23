@@ -77,7 +77,7 @@ def menu():
         if choice == 2:
             
             print("\n")
-            con_no = int(input("Enter contact number: "))
+            con_no = input("Enter contact number: ")
             
             flag3 = True
             
@@ -101,7 +101,7 @@ def menu():
 
                 if choice1 == 1:
 
-                    member1.vie_regimen(bmi)
+                    member1.vie_regimen(con_no, bmi)
 
                 if choice1 == 2:
                     

@@ -12,7 +12,7 @@ class superUser(Gym):
             tmp_array.append(input("Enter your full name: "))
             tmp_array.append(input("Enter your age: "))
             tmp_array.append(input("Enter your gender: "))
-            no = int(input("Enter your mobile no: "))
+            no = input("Enter your mobile no: ")
             tmp_array.append(input("Enter your email: "))
             tmp_array.append(int(input("Enter your BMI: ")))
             tmp_array.append(int(input("Enter your membership duration: ")))
@@ -41,7 +41,7 @@ class superUser(Gym):
         print("Choose out of this members' contact no")
         print(list(Gym.member.keys()))
         
-        con_no = int(input("Enter: "))
+        con_no = input("Enter: ")
         
         if con_no not in Gym.member:
             print("Member doesn't exist")
@@ -66,7 +66,7 @@ class superUser(Gym):
         print("Choose out of this members' contact no")
         print(list(Gym.member.keys()))
         
-        con_no = int(input("Enter: "))
+        con_no = input("Enter: ")
         
         if con_no not in Gym.member:
             print("Member doesn't exist")
@@ -85,7 +85,7 @@ class superUser(Gym):
         print("Choose out of this members' contact no")
         print(list(Gym.member.keys()))
         
-        con_no = int(input("Enter: "))
+        con_no = input("Enter: ")
         
         if con_no not in self.member:
             print("Member doesn't exist")
@@ -98,7 +98,7 @@ class superUser(Gym):
             tmp_array.append(input("Enter your full name: "))
             tmp_array.append(input("Enter your age: "))
             tmp_array.append(input("Enter your gender: "))
-            no = int(input("Enter your mobile no: "))
+            no = input("Enter your mobile no: ")
             tmp_array.append(input("Enter your email: "))
             tmp_array.append(int(input("Enter your BMI: ")))
             tmp_array.append(int(input("Enter your membership duration: ")))
@@ -113,6 +113,7 @@ class superUser(Gym):
                 
                 del Gym.member[con_no]
                 Gym.member[no] = tmp_array
+                
             elif con_no == no:
                 
                 Gym.member[no] = tmp_array
@@ -143,21 +144,22 @@ class superUser(Gym):
         
         print("\n")
         
-        bmi = int(input("Enter BMI: "))
+        print("List of members")
+        print(list(Gym.member.keys()))
+        con_no = input("Choose contact number of member for custom regimen: ")
         
-        bmi_1 = sorted(Gym.regimen)
         
-        for i in bmi_1:
-            if (bmi < i):
-                print("Regimen already exist")
-                print("Bmi {} is covered under bmi {} regimen".format(bmi, i))
-                print("\n")
-                return
+        if con_no not in Gym.member or con_no in Gym.regimen:
+            print("\n")
+            print("Either member doesn't exist or custom regimen is already there, please update it")
+            print("\n")
+            return
         
         regimen_list = []
         days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
         
         try:
+            print("\n")
             for i in range(7):
                 regimen_list.append(input("{}: ".format(days[i])))
             print("\n")
@@ -166,7 +168,7 @@ class superUser(Gym):
             print("ERROR! Regimen couldn't be created")
             return
                     
-        Gym.regimen[bmi] = regimen_list
+        Gym.custom_regimen[con_no] = regimen_list
             
     
     def vie_regimen(self):
@@ -176,61 +178,76 @@ class superUser(Gym):
         regimen_1 = sorted(Gym.regimen)
         bmi_1 = 0
         
-        bmi = int(input("Enter bmi: "))
+        print("View by\n1.Bmi\n2.Contact no")
+        opt = int(input("Enter: "))
         
-        for key in regimen_1:
-            if (bmi < key):
-                bmi_1 = key
-                break
-        else:
-            print("BMI not in range")
+        if opt == 1:
+            bmi = int(input("Enter bmi or contact number (10 digits): "))
+
+            for key in regimen_1:
+                if (bmi < key and bmi < 30):
+                    bmi_1 = key
+                    break
+            else:
+                bmi_1 = 30.01
+        
+            days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+        
             print("\n")
-            return
+            print("The regimen for bmi {} is:".format(bmi))
+            for i in range(7):
+                print("{} : {}".format(days[i], self.regimen[bmi_1][i]))
+            print("\n")
+            
+        if opt == 2:
+            
+            con_no = input("Enter contact number: ")
+            
+            if con_no not in Gym.custom_regimen:
+                print("There is no custom regimen for you. Please create it")
+                return
+            
+            days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
         
-        days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
-        
-        print("\n")
-        print("The regimen for bmi {} is:".format(bmi))
-        for i in range(7):
-            print("{} : {}".format(days[i], self.regimen[bmi_1][i]))
-        print("\n")
+            print("\n")
+            print("The custom regimen for youis:")
+            for i in range(7):
+                print("{} : {}".format(days[i], Gym.custom_regimen[con_no][i]))
+            print("\n")
         
     
     def del_regimen(self):
         
         print("\n")
         
-        regimen_1 = sorted(Gym.regimen)
+        print("Available list of members who have custom regimen)")
+        print(Gym.custom_regimen)
         
-        print("Choose out of these regimen")
-        print(regimen_1)
+        con_no = input("Enter contact: ")
         
-        bmi = int(input("Enter bmi: "))
-        
-        if bmi not in Gym.regimen:
+        if con_no not in Gym.custom_regimen:
             print("Regimen doesn't exist")
             print("\n")
             return
         
-        del self.regimen[bmi]
+        del Gym.custom_regimen[con_no]
         
         print("\n")
-        print("Regimen has been deleted")
+        print("Member doesn't exist or doesn't have custom regimen, please create it")
         print("\n")
     
     def upd_regimen(self):
         
         print("\n")
         
-        regimen_1 = sorted(Gym.regimen)
+        print("Available list of members who have custom regimen)")
+        print(Gym.custom_regimen.keys(
+        ))
         
-        print("Choose out of these regimen")
-        print(regimen_1)
+        con_no = input("Enter contact: ")       
         
-        bmi = int(input("Enter bmi: "))
-        
-        if bmi not in Gym.regimen:
-            print("Regimen doesn't exist")
+        if con_no not in Gym.custom_regimen:
+            print("Member doesn't exist or doesn't have custom regimen, please create it")
             print("\n")
             return
         
@@ -238,13 +255,16 @@ class superUser(Gym):
         
         try:
             for i in range(7):
-                Gym.regimen[bmi][i] = input("{}".format(days[i]))
+                Gym.custom_regimen[con_no][i] = input("{} ".format(days[i]))
             print("\n")
             print("Regimen has been updated")
             print("\n")
         except:
             print("ERROR! Regimen couldn't be updated")
             
+            
+    
+    
             
     
     
